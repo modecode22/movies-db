@@ -1,8 +1,20 @@
-import React from 'react'
+import React , {useEffect , useState} from 'react'
 import Movies from "./Movies";
 import PaginateSection from './PaginateSection';
+import { useSelector , useDispatch } from 'react-redux';
+import { getAllMovie } from './../redux/action/moviesActions';
+function MoviesPage({  getPage, pageCount }) {
+    const [movies, setMovies] = useState([]);
+    const dispatch = useDispatch();
 
-function MoviesPage({ movies, getPage, pageCount }) {
+    useEffect(() => {
+      dispatch(getAllMovie());
+    }, []);
+
+    const dataMovies = useSelector((state) => state.movies);
+    useEffect(() => {
+      setMovies(dataMovies);
+    }, [dataMovies]);
   return (
     <div className="flex items-center justify-evenly flex-wrap mt-5 h-full w-full gap-5">
       {movies.length >= 1 ? (
